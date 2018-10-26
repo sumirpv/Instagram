@@ -3,6 +3,7 @@ import { View, Text, Image,  Button } from 'react-native';
 import IonIcon from 'react-native-vector-icons/Ionicons';
 
 export default class PhotoSection extends Component {
+    
   render() {
     return (
       <View style= {styles.container}>
