@@ -10,9 +10,14 @@ import {
 } from 'react-native';
 import { WebBrowser } from 'expo';
 
-import { MonoText } from '../components/StyledText';
+// import { MonoText } from '../components/StyledText';
 import Header from '../src/components/header';
-import PhotoFeed from '../src/components/photo-feed'
+import PhotoFeed from '../src/components/photo-feed';
+import {Provider} from 'react-redux';
+import {createStore, applyMiddleware} from 'redux';
+import reducers from '../src/reducers';
+import ReduxThunk from 'redux-thunk';
+
 
 export default class HomeScreen extends React.Component {
   static navigationOptions = {
@@ -20,20 +25,23 @@ export default class HomeScreen extends React.Component {
   };
 
   render() {
+    const store = createStore(reducers, {} ,applyMiddleware(ReduxThunk))
     return (
-      <View style={styles.container}>
+      <Provider store ={store} >
+        <View style={styles.container}>
 
-         <Header text='Photos'/>
-         <PhotoFeed />
+          <Header text='Photos'/>
+          <PhotoFeed />
 
-        {/* <View style={styles.tabBarInfoContainer}>
-          <Text style={styles.tabBarInfoText}>This is a tab bar. You can edit it in:</Text>
+          {/* <View style={styles.tabBarInfoContainer}>
+            <Text style={styles.tabBarInfoText}>This is a tab bar. You can edit it in:</Text>
 
-          <View style={[styles.codeHighlightContainer, styles.navigationFilename]}>
-            <MonoText style={styles.codeHighlightText}>navigation/MainTabNavigator.js</MonoText>
-          </View>
-        </View> */}
-      </View>
+            <View style={[styles.codeHighlightContainer, styles.navigationFilename]}>
+              <MonoText style={styles.codeHighlightText}>navigation/MainTabNavigator.js</MonoText>
+            </View>
+          </View> */}
+        </View>
+      </Provider>
     );
   }
 

@@ -1,18 +1,16 @@
 import React, { Component } from 'react';
 import {  ScrollView } from 'react-native';
-import axios from 'axios';
-import PhotoSection from './photo-section'
-export default class PhotoFeed extends Component {
-    state = { photos: ['']};
+import PhotoSection from './photo-section';
+import {connect} from 'react-redux';
+import { getPhotos} from '../actions';
+
+class PhotoFeed extends Component {
     componentDidMount(){
-        axios.get('http://localhost:3000/photos')
-        .then (res => {
-          this.setState({ photos:res.data})
-          });
+        this.props.getPhotos();
     }
 
-    getPhoto(){
-        return this.state.photos.map((myPhoto, id) =>{
+    renderPhoto(){
+        return this.props.photos.map((myPhoto, id) =>{
             return(
                 <PhotoSection  key ={id} photo ={myPhoto} />
             );
@@ -21,8 +19,15 @@ export default class PhotoFeed extends Component {
   render() {
     return (
       <ScrollView Horizontal = { true }>
-      {this.getPhoto()}
+      {this.renderPhoto()}
       </ScrollView>
     );
   }
 }
+function mapStateToProps(state){
+    return {
+        photos: state.photos
+    }
+}
+
+export default connect(mapStateToProps,  {getPhotos})(PhotoFeed);
