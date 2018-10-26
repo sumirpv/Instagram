@@ -12,9 +12,9 @@ export default class PhotoFeed extends Component {
     }
 
     getPhoto(){
-        return this.state.photos.map(myPhoto =>{
+        return this.state.photos.map((myPhoto, id) =>{
             return(
-                <PhotoSection  key ={myPhoto.username} photo ={myPhoto} />
+                <PhotoSection  key ={id} photo ={myPhoto} />
             );
         })
     }

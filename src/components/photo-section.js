@@ -1,9 +1,22 @@
 import React, { Component } from 'react';
-import { View, Text, Image,  Button } from 'react-native';
+import { View, Text, Image,  TouchableWithoutFeedback } from 'react-native';
 import IonIcon from 'react-native-vector-icons/Ionicons';
 
 export default class PhotoSection extends Component {
     
+    constructor(){
+        super();
+        this.likes= false;
+        this.state = { ionIcon :'ios-heart-outline'}
+    }
+    togleLike(){
+        this.likes =!this.likes;
+        if( this.likes){
+            this.setState({ ionIcon :'ios-heart'});
+        }else{
+            this.setState({ ionIcon : 'ios-heart-outline'});
+        }
+    }
   render() {
     return (
       <View style= {styles.container}>
@@ -21,9 +34,13 @@ export default class PhotoSection extends Component {
               source={{uri:this.props.photo.image}}/>
           </View>
           <View style ={ styles.heartContainer}>
+              
+              <TouchableWithoutFeedback  onPress ={ this.togleLike.bind(this)}>
               <IonIcon
-              name='ios-heart-outline'
-              size={30} />
+              name={this.state.ionIcon}
+              size={30}
+              style={{color : this.state.ionIcon === 'ios-heart'? 'red' : 'black'}} />
+              </TouchableWithoutFeedback>
           </View>
           <View style= { styles.imageMeta}>
               <Text style ={styles.userName }>User Name</Text>
